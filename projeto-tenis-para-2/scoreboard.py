@@ -9,7 +9,6 @@ class Scoreboard(Turtle):
         self.hideturtle()
         self.l_score=0
         self.r_score=0
-        self.write_score()
         self.user_bet = screen2.textinput(title = "Qual a meta", prompt="Informe a meta de pontos para vencer: ")
     def write_score(self):
         self.clear()

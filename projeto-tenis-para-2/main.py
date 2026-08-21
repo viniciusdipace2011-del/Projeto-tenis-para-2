@@ -33,21 +33,23 @@ while game_on:
     if ball.ycor() > 280 or ball.ycor()< -280:
         ball.bounce_y()
     #Detect collision with r_paddle
-    if ball.distance(r_padle) < 50 and ball.xcor() > 330 and ball.xcor() < 350:
+    if ball.distance(r_padle) < r_padle.size and ball.xcor() > 330 and ball.xcor() < 350:
         ball.bounce_x()
     #Detect collision with l_paddle
-    if ball.distance(l_padle) < 50 and ball.xcor() < -330 and ball.xcor() > -350:
+    if ball.distance(l_padle) < l_padle.size and ball.xcor() < -330 and ball.xcor() > -350:
         ball.bounce_x()
     #Detect R padle misses
     if ball.xcor() > 380:
         ball.out_of_bounds()
         scoreboard.increase_l()
+        l_padle.decrease_size(scoreboard.user_bet)
         scoreboard.write_score()
         scoreboard.write_meta()
     #Detect L padle misses
     if ball.xcor() < -380:
         ball.out_of_bounds()
         scoreboard.increase_r()
+        r_padle.decrease_size(scoreboard.user_bet)
         scoreboard.write_score()
         scoreboard.write_meta()
     #Detect if someone won
