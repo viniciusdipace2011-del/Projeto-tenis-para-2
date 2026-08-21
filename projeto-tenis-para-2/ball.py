@@ -20,7 +20,7 @@ class Ball(Turtle):
     def bounce_x(self):
         if self.can_bounce:
             self.x_move *= -1
-            self.move_speed *= 0.8
+            self.move_speed = max(0.02,self.move_speed*0.95)
             self.can_bounce = False
     def out_of_bounds(self):
             self.goto(0, 0)

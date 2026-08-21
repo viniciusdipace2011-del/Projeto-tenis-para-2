@@ -8,16 +8,23 @@ screen.setup(width=800, height=600)
 screen.bgcolor("black")
 screen.title("Pong")
 screen.tracer(0)
+
 ball = Ball()
 scoreboard = Scoreboard()
 r_padle = Padle(350,0)
 l_padle = Padle(-350,0)
+
 screen.listen()
 screen.onkey(r_padle.up, "Up")
 screen.onkey(r_padle.down, "Down")
 screen.onkey(l_padle.up, "w")
 screen.onkey(l_padle.down, "s")
-game_on = True
+
+if scoreboard.user_bet:
+    scoreboard.user_bet = int(scoreboard.user_bet)
+    scoreboard.write_meta()
+    game_on = True
+
 while game_on:
     time.sleep(ball.move_speed)
     screen.update()
@@ -34,11 +41,22 @@ while game_on:
     #Detect R padle misses
     if ball.xcor() > 380:
         ball.out_of_bounds()
-        scoreboard.increase_r()
+        scoreboard.increase_l()
         scoreboard.write_score()
+        scoreboard.write_meta()
     #Detect L padle misses
     if ball.xcor() < -380:
         ball.out_of_bounds()
-        scoreboard.increase_l()
+        scoreboard.increase_r()
         scoreboard.write_score()
+        scoreboard.write_meta()
+    #Detect if someone won
+    if scoreboard.l_score == scoreboard.user_bet:
+        scoreboard.goto(0,0)
+        scoreboard.write("Left Player Won", align="center", font=("Courier", 40, "normal"))
+        game_on = False
+    if scoreboard.r_score == scoreboard.user_bet:
+        scoreboard.goto(0,0)
+        scoreboard.write("Right Player Won", align="center", font=("Courier", 40, "normal"))
+        game_on = False        
 screen.exitonclick()
